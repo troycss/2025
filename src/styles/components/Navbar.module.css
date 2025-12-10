@@ -1,0 +1,118 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--color-background);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--spacing-sm) 0;
+  transition: background-color var(--transition-base), border-color var(--transition-base);
+}
+
+.navContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  transition: color var(--transition-fast);
+}
+
+.logo:hover {
+  color: var(--color-accent);
+}
+
+.menuToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-primary);
+  padding: 8px;
+  border-radius: var(--border-radius-md);
+  transition: background-color var(--transition-fast);
+}
+
+.menuToggle:hover {
+  background-color: var(--color-secondary-bg);
+}
+
+.navLinks {
+  display: none;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.navLink {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  padding: 8px 12px;
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-fast);
+}
+
+.navLink:hover {
+  color: var(--color-accent);
+  background-color: var(--color-secondary-bg);
+}
+
+.navLinkActive {
+  color: var(--color-accent);
+}
+
+.darkModeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-primary);
+  padding: 8px;
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-fast);
+}
+
+.darkModeToggle:hover {
+  background-color: var(--color-secondary-bg);
+  color: var(--color-accent);
+}
+
+@media (max-width: 768px) {
+  .navLinks {
+    position: fixed;
+    top: 65px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background-color: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--spacing-md);
+    gap: var(--spacing-xs);
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform var(--transition-base), opacity var(--transition-base);
+  }
+
+  .navLinksOpen {
+    display: flex;
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .navLink {
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+  }
+}
+
+@media (min-width: 769px) {
+  .menuToggle {
+    display: none;
+  }
+
+  .navLinks {
+    display: flex;
+  }
+}
