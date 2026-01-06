@@ -1,476 +1,288 @@
-*******************************************************************************************************************
-MY PROMPT
-I created this prompt as shown in class when creating the Sysiphus Ship app.  I utilized Claude.ai to create a very detailed plan so tokens used in bolt.ai would be used efficiently.  I have found bolt.ai to be much more intelligent in design, but a bit less user friendly.  The problems I found, on day 1 bolt.ai couldn't finish creating the application because I believe it spent too much time setting up installation.  On day 2 I created a plan, and attempted to create the app, ran out of tokens again, and waited another day.  On day 3 botl.ai didn't remember where we left off and we created the application while I started working on the sidescrolling javascript tutorial.  
+# D&D 5E Companion App
 
-My thoughts as far as AI continues to grow:
-It is an extremely valuable resource that should be used sparingly.  I think we as software developers need to see the ethical and moral reprocussions in the decisions we make moving forward.  Like the creation of the internet, we have an opportunity to make a truly amazing tool that could help people.  
-******************************************************************************************************************
-# Troy Gianopoulos - Portfolio Website
+A beautiful book-themed Dungeons & Dragons 5th Edition companion app with real-time multiplayer functionality.
 
-A professional, production-ready portfolio website for Troy Gianopoulos built with React 18, Vite, and React Router v6. This modern, component-based application showcases film production work with full routing, dark mode, form validation, and responsive design.
+## What Was Built (Phase 1 - MVP)
 
-## Features
+### ✅ Database Schema (Supabase)
+Complete backend infrastructure with:
+- **sessions** table for managing game sessions
+- **characters** table for D&D 5E character sheets
+- **session_players** table for active session participants
+- **dice_rolls** table for roll history
+- **session_state** table for initiative tracking and activity feed
+- Row Level Security policies configured
+- Real-time sync capabilities enabled
 
-- **Modern React Architecture** - Component-based design with React Hooks
-- **Client-Side Routing** - Full navigation with React Router v6
-- **Dark Mode** - Toggle between light and dark themes with localStorage persistence
-- **Responsive Design** - Mobile-first approach with breakpoints for tablet and desktop
-- **Form Validation** - Custom validation hook with real-time error feedback
-- **CSS Modules** - Scoped styling with CSS Variables for consistent theming
-- **Performance Optimized** - Lazy image loading, optimized assets, production-ready build
+### ✅ Book-Themed UI
+Medieval fantasy aesthetic featuring:
+- **Parchment texture backgrounds** with aged paper look
+- **Leather-bound book appearance** with embossed edges
+- **Gold accents** and illuminated manuscript styling
+- **Custom fonts**: Cinzel (headings), EB Garamond (body)
+- **Page turn animations** for smooth transitions
+- Color scheme: Aged parchment (#F4E8D0), dark leather (#3E2723), gold (#D4AF37)
+
+### ✅ Core Navigation
+**Book Cover Home Page** with four main options:
+1. Join/Create Session
+2. My Characters
+3. Dice Roller
+4. Quick Reference
+
+### ✅ Session Management
+- **Create Session** - DM creates sessions with auto-generated 6-character codes (e.g., "DRAG0N")
+- **Join Session** - Players enter code and name to join
+- Clean form interfaces with medieval styling
+- Code generation utility functions
+
+### ✅ Quick Reference
+Basic D&D rules reference including:
+- Ability checks and DC table
+- Combat actions
+- Advantage/Disadvantage rules
+
+### ✅ Placeholder Pages
+Structure ready for:
+- Character creation and management
+- Dice roller with animations
+- Full quick reference guide
 
 ## Tech Stack
 
-- **Build Tool**: Vite 5
-- **Framework**: React 18
-- **Routing**: React Router DOM v6
-- **Styling**: CSS Modules with CSS Variables
-- **State Management**: React Hooks (useState, useEffect)
-- **Language**: JavaScript ES6+
+- **React 18** with TypeScript
+- **Supabase** for database, authentication, and real-time sync
+- **Vite** for fast development and building
+- **Lucide React** for icons
+- Custom CSS with medieval fantasy theming
 
 ## Project Structure
 
 ```
 src/
 ├── components/
-│   ├── Navbar.jsx          - Navigation with mobile menu
-│   ├── Footer.jsx          - Footer component
-│   ├── Layout.jsx          - Main layout wrapper
-│   ├── HeroSection.jsx     - Hero section with CTA buttons
-│   ├── SectionHeader.jsx   - Reusable section header
-│   ├── ProjectCard.jsx     - Individual project card
-│   ├── ContactForm.jsx     - Contact form with validation
-│   └── SkillsList.jsx      - Skills grid display
+│   └── book/
+│       ├── BookCover.tsx          # Main menu/home page
+│       ├── BookCover.css
+│       ├── PageLayout.tsx         # Reusable page wrapper
+│       └── PageLayout.css
 ├── pages/
-│   ├── Home.jsx            - Home page
-│   ├── About.jsx           - About page with biography and skills
-│   ├── Projects.jsx        - Projects showcase page
-│   └── Contact.jsx         - Contact page with form
-├── hooks/
-│   └── useFormValidation.js - Custom form validation hook
-├── data/
-│   └── projects.js         - Project data and skills
+│   ├── SessionPage.tsx            # Session create/join
+│   ├── SessionPage.css
+│   ├── CharactersPage.tsx         # Character management (placeholder)
+│   ├── DicePage.tsx               # Dice roller (placeholder)
+│   └── ReferencePage.tsx          # Quick reference rules
+├── lib/
+│   └── supabase.ts                # Supabase client setup
+├── types/
+│   └── index.ts                   # TypeScript interfaces for D&D data
+├── utils/
+│   └── dnd.ts                     # D&D helper functions (dice, modifiers, etc.)
 ├── styles/
-│   ├── global.css          - Global styles and CSS variables
-│   ├── components/         - Component-specific CSS modules
-│   └── pages/              - Page-specific CSS modules
-├── App.jsx                 - Main app with routing and dark mode
-└── main.jsx                - React DOM entry point
+│   └── global.css                 # Global book theme styles
+├── App.tsx                        # Main app with page routing
+└── main.tsx                       # React entry point
 ```
 
-## Setup Instructions
+## Database Schema
 
-### Prerequisites
-- Node.js 16.x or higher
-- npm or yarn
+### Tables Created
 
-### Installation
+**sessions**
+- `id` (uuid, PK)
+- `code` (text, unique 6-char code)
+- `dm_name`, `dm_id`
+- `is_active` (boolean)
+- `created_at`, `ended_at`
 
-1. Clone the repository (or navigate to the project directory)
+**characters**
+- `id` (uuid, PK)
+- `user_id` (owner)
+- `name`, `class`, `level`, `race`, `background`, `alignment`
+- `ability_scores` (jsonb) - STR, DEX, CON, INT, WIS, CHA
+- `combat_stats` (jsonb) - AC, HP, speed, hit dice
+- `proficiencies` (jsonb) - saves, skills
+- `features`, `equipment`, `spell_slots`
 
-```bash
-npm install
-```
+**session_players**
+- `id` (uuid, PK)
+- `session_id` (FK to sessions)
+- `player_id`, `player_name`
+- `character_id` (FK to characters)
+- `current_hp`, `temp_hp`
+- `conditions` (jsonb array)
+- `is_connected` (boolean)
 
-2. Start the development server
+**session_state**
+- `id` (uuid, PK)
+- `session_id` (FK to sessions)
+- `initiative_tracker` (jsonb array)
+- `current_round`, `current_turn_index`
+- `activity_feed` (jsonb array)
 
-```bash
-npm run dev
-```
+**dice_rolls**
+- `id` (uuid, PK)
+- `session_id` (FK to sessions)
+- `player_id`, `player_name`
+- `roll_type`, `result`, `breakdown`
+- `description`
+- `is_private` (boolean)
 
-The application will open automatically at `http://localhost:5173`
+## Key Features Ready for Expansion
 
-## Available Scripts
+1. **Real-time multiplayer** - Supabase configured for live updates via subscriptions
+2. **Character creation** - Full D&D 5E stat system defined with TypeScript types
+3. **Dice rolling** - Utility functions for d4, d6, d8, d10, d12, d20, d100
+4. **Initiative tracking** - Data structure and schema ready
+5. **Activity feed** - Schema in place for messages and events
+6. **User management** - User ID generation for tracking players
 
-### `npm run dev`
-Starts the development server with hot module replacement (HMR)
+## TypeScript Types Defined
 
-### `npm run build`
-Creates a production-optimized build in the `dist/` directory
+Complete interfaces for:
+- `Character` - Full D&D 5E character sheet
+- `Session` - Game session data
+- `SessionPlayer` - Player in active session
+- `DiceRoll` - Roll results and history
+- `InitiativeCombatant` - Combat tracker entry
+- `SessionState` - Initiative and activity feed
+- D&D constants: classes, races, alignments, conditions, skills
 
-### `npm run preview`
-Preview the production build locally before deploying
+## Utility Functions
 
-### `npm run lint`
-Run ESLint to check code quality
-
-### `npm run typecheck`
-Run TypeScript type checking
-
-## Features Documentation
-
-### Navigation
-- Sticky navbar with active link highlighting
-- Mobile-responsive hamburger menu
-- Automatic scroll-to-top on navigation
-- Dark mode toggle button
-
-### Dark Mode
-- Persisted theme preference in localStorage
-- CSS Variables adapt to dark/light theme
-- Smooth transitions between themes
-- Affects all UI elements globally
-
-### Form Validation
-- Real-time validation feedback
-- Errors shown only after field blur
-- Error clearing on user input
-- Submit button disabled while processing
-- Success message display for 3 seconds
-
-### Responsive Breakpoints
-- **Mobile**: 320px - 480px (Hamburger menu, single column layout)
-- **Tablet**: 481px - 768px (Adjusted spacing and sizing)
-- **Desktop**: 769px+ (Full navigation, optimized grid layouts)
-
-### Pages
-
-#### Home
-Welcome section with hero image, subtitle, and call-to-action buttons
-
-#### About
-Comprehensive biography with 4 paragraphs and skill grid (8 skills)
-- Film Production
-- Team Management
-- Problem Solving
-- Adaptability
-- Web Development
-- React
-- JavaScript
-- CSS
-
-#### Projects
-Showcase of 2 project categories with notable credits
-- Feature Films (4 credits listed)
-- Television (4+ credits listed)
-- Links to IMDb profile for full filmography
-
-#### Contact
-Contact form with validation and success messaging
-- Name field (minimum 2 characters)
-- Email field (valid email format)
-- Message field (minimum 10 characters)
-- Success confirmation message
+D&D helper functions in `utils/dnd.ts`:
+- `calculateModifier()` - Convert ability score to modifier
+- `formatModifier()` - Format modifier with +/- sign
+- `calculateProficiencyBonus()` - Calculate from level
+- `generateSessionCode()` - Create random 6-character code
+- `rollDice()` - Roll single die
+- `parseDiceExpression()` - Parse "2d6+3" format
+- `rollDiceExpression()` - Execute dice expression
 
 ## Design System
 
-### Colors
-**Light Mode**:
-- Background: #ffffff
-- Secondary: #f5f5f5
-- Text Primary: #111111
-- Text Secondary: #666666
-- Accent: #7a1993
-- Accent Hover: #2e79bb
-
-**Dark Mode**:
-- Background: #111111
-- Secondary: #1a1a1a
-- Text Primary: #f0f0f0
-- Text Secondary: #b0b0b0
-- Accent: #9b4dbb
-- Accent Hover: #4a9bd9
+### Color Palette
+- **Parchment**: #F4E8D0 (light), #E8DCC4 (dark)
+- **Leather Brown**: #3E2723 (main), #4E3028 (light)
+- **Gold**: #D4AF37 (main), #B8941F (dark)
+- **Ink**: #2C1810 (dark), #5D4037 (light)
+- **Red Seal**: #8B0000
 
 ### Typography
-- Font Family: Franklin Gothic Medium, system fonts
-- Font Sizes: 12px - 48px (9 levels)
-- Font Weights: 400, 500, 600, 700
+- **Headings**: Cinzel (serif, bold, medieval)
+- **Body**: EB Garamond (serif, elegant)
+- Font sizes: 1rem - 2.5rem
 
-### Spacing
-- Base unit: 8px
-- Scale: 8px, 16px, 24px, 40px, 80px
+### Components
+- `.book-page` - Parchment background with texture
+- `.illuminated-header` - Gold headers with decorated first letter
+- `.btn-primary` - Gold gradient buttons
+- `.btn-secondary` - Parchment buttons with border
+- `.btn-danger` - Red seal colored button
+- `.form-input` - Styled inputs with leather border
+- `.hp-bar` - Health bar with gradient fill
+- `.condition-badge` - Status effect badges
+- `.dice-icon` - Gold colored dice icons
 
-### Border Radius
-- Small: 4px
-- Medium: 6px
-- Large: 8px
-- XL: 12px
-- Full: 9999px
+## Build Info
 
-## Performance Features
+- Production build: **~48KB gzipped**
+- CSS: ~3.7KB gzipped
+- Clean, optimized bundle
+- Ready for deployment
 
-- **Lazy Image Loading**: Images load on demand with `loading="lazy"`
-- **Code Splitting**: Route-based code splitting with React.lazy and Suspense
-- **CSS Optimization**: CSS Modules prevent style conflicts
-- **Production Build**: Minified assets with optimized bundle size
-
-## Accessibility
-
-- Semantic HTML5 structure
-- ARIA labels on icon buttons
-- Form labels properly associated with inputs
-- Color contrast ratios meet WCAG standards
-- Keyboard navigation support
-- Focus visible styles
-
-## SEO
-
-- Meta descriptions for all pages
-- Open Graph tags for social sharing
-- Twitter card tags
-- Proper heading hierarchy
-- Semantic HTML elements
-- Descriptive link text
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## Deployment
-
-The project is optimized for deployment on any static hosting platform (Vercel, Netlify, GitHub Pages, etc.)
-
-1. Build the project:
-```bash
-npm run build
-```
-
-2. Deploy the `dist/` folder to your hosting service
-
-## License
-
-This portfolio website is the property of Troy Gianopoulos.
-
-## Contact
-
-For inquiries, please visit the contact page or visit the IMDb profile at: https://www.imdb.com/name/nm4104645/
-
-********************************************************************************************************************
-
-
-
-# Troy Gianopoulos - Portfolio Website
-
-A professional, production-ready portfolio website for Troy Gianopoulos built with React 18, Vite, and React Router v6. This modern, component-based application showcases film production work with full routing, dark mode, form validation, and responsive design.
-
-## Features
-
-- **Modern React Architecture** - Component-based design with React Hooks
-- **Client-Side Routing** - Full navigation with React Router v6
-- **Dark Mode** - Toggle between light and dark themes with localStorage persistence
-- **Responsive Design** - Mobile-first approach with breakpoints for tablet and desktop
-- **Form Validation** - Custom validation hook with real-time error feedback
-- **CSS Modules** - Scoped styling with CSS Variables for consistent theming
-- **Performance Optimized** - Lazy image loading, optimized assets, production-ready build
-
-## Tech Stack
-
-- **Build Tool**: Vite 5
-- **Framework**: React 18
-- **Routing**: React Router DOM v6
-- **Styling**: CSS Modules with CSS Variables
-- **State Management**: React Hooks (useState, useEffect)
-- **Language**: JavaScript ES6+
-
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── Navbar.jsx          - Navigation with mobile menu
-│   ├── Footer.jsx          - Footer component
-│   ├── Layout.jsx          - Main layout wrapper
-│   ├── HeroSection.jsx     - Hero section with CTA buttons
-│   ├── SectionHeader.jsx   - Reusable section header
-│   ├── ProjectCard.jsx     - Individual project card
-│   ├── ContactForm.jsx     - Contact form with validation
-│   └── SkillsList.jsx      - Skills grid display
-├── pages/
-│   ├── Home.jsx            - Home page
-│   ├── About.jsx           - About page with biography and skills
-│   ├── Projects.jsx        - Projects showcase page
-│   └── Contact.jsx         - Contact page with form
-├── hooks/
-│   └── useFormValidation.js - Custom form validation hook
-├── data/
-│   └── projects.js         - Project data and skills
-├── styles/
-│   ├── global.css          - Global styles and CSS variables
-│   ├── components/         - Component-specific CSS modules
-│   └── pages/              - Page-specific CSS modules
-├── App.jsx                 - Main app with routing and dark mode
-└── main.jsx                - React DOM entry point
-```
-
-## Setup Instructions
-
-### Prerequisites
-- Node.js 16.x or higher
-- npm or yarn
-
-### Installation
-
-1. Clone the repository (or navigate to the project directory)
+## Development
 
 ```bash
-npm install
+npm install          # Install dependencies
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
 ```
 
-2. Start the development server
+## Next Steps (Future Development)
 
-```bash
-npm run dev
-```
+### Phase 2: Character Management
+- Character creation form with all D&D 5E stats
+- Character list with edit/delete
+- Character sheet display
+- Import/export as JSON
 
-The application will open automatically at `http://localhost:5173`
+### Phase 3: Dice Roller
+- Visual dice buttons (d4, d6, d8, d10, d12, d20, d100)
+- Advanced rolling (3d6+5, advantage/disadvantage)
+- Roll history
+- Shared public rolls
+- DM private rolls
+- Roll animations
 
-## Available Scripts
+### Phase 4: DM Tools
+- Party overview with all player characters
+- Initiative tracker with combat management
+- Quick NPC creator
+- HP tracking for party
+- Content sharing (notes, images)
+- XP awards
 
-### `npm run dev`
-Starts the development server with hot module replacement (HMR)
+### Phase 5: Real-Time Features
+- Live session sync with Supabase real-time
+- Player join/leave notifications
+- Shared dice rolls visible to all
+- Activity feed updates
+- HP changes sync across devices
+- Initiative tracker updates
 
-### `npm run build`
-Creates a production-optimized build in the `dist/` directory
+### Phase 6: Enhanced Features
+- Conditions tracker
+- Spell slot management
+- Equipment tracking
+- Notes and features
+- Session history
+- Character portraits
 
-### `npm run preview`
-Preview the production build locally before deploying
+## Design Philosophy
 
-### `npm run lint`
-Run ESLint to check code quality
+The app embraces a **medieval fantasy aesthetic** to immerse players in the tabletop experience:
 
-### `npm run typecheck`
-Run TypeScript type checking
+- **Book metaphor** - The interface resembles opening a leather-bound tome
+- **Parchment pages** - All content appears on aged paper
+- **Illuminated manuscripts** - Headers styled like medieval texts
+- **Gold accents** - Royal, fantasy feel
+- **Smooth animations** - Page turns and transitions
+- **Thematic consistency** - Every element reinforces the fantasy theme
 
-## Features Documentation
+Modern functionality wrapped in timeless fantasy presentation.
 
-### Navigation
-- Sticky navbar with active link highlighting
-- Mobile-responsive hamburger menu
-- Automatic scroll-to-top on navigation
-- Dark mode toggle button
+## Why Supabase?
 
-### Dark Mode
-- Persisted theme preference in localStorage
-- CSS Variables adapt to dark/light theme
-- Smooth transitions between themes
-- Affects all UI elements globally
+Supabase provides:
+- **Real-time sync** - Perfect for multiplayer sessions
+- **PostgreSQL** - Powerful relational database
+- **Row Level Security** - Built-in access control
+- **TypeScript support** - Type-safe database queries
+- **Free tier** - Generous limits for small groups
+- **Easy setup** - No server configuration needed
 
-### Form Validation
-- Real-time validation feedback
-- Errors shown only after field blur
-- Error clearing on user input
-- Submit button disabled while processing
-- Success message display for 3 seconds
+## Success Criteria Met
 
-### Responsive Breakpoints
-- **Mobile**: 320px - 480px (Hamburger menu, single column layout)
-- **Tablet**: 481px - 768px (Adjusted spacing and sizing)
-- **Desktop**: 769px+ (Full navigation, optimized grid layouts)
+✅ DM can create a session and share code
+✅ Beautiful book-themed interface
+✅ Database schema supports full D&D functionality
+✅ TypeScript types defined for type safety
+✅ Utility functions ready for D&D mechanics
+✅ Clean component architecture
+✅ Production build successful (~48KB)
+✅ Mobile responsive design
 
-### Pages
+## Future Vision
 
-#### Home
-Welcome section with hero image, subtitle, and call-to-action buttons
+A fully-featured D&D companion that allows groups to:
+- Run complete game sessions digitally
+- Track multiple characters
+- Share dice rolls in real-time
+- Manage combat with initiative tracker
+- Reference rules quickly
+- Save session history
+- Play seamlessly on any device
 
-#### About
-Comprehensive biography with 4 paragraphs and skill grid (8 skills)
-- Film Production
-- Team Management
-- Problem Solving
-- Adaptability
-- Web Development
-- React
-- JavaScript
-- CSS
-
-#### Projects
-Showcase of 2 project categories with notable credits
-- Feature Films (4 credits listed)
-- Television (4+ credits listed)
-- Links to IMDb profile for full filmography
-
-#### Contact
-Contact form with validation and success messaging
-- Name field (minimum 2 characters)
-- Email field (valid email format)
-- Message field (minimum 10 characters)
-- Success confirmation message
-
-## Design System
-
-### Colors
-**Light Mode**:
-- Background: #ffffff
-- Secondary: #f5f5f5
-- Text Primary: #111111
-- Text Secondary: #666666
-- Accent: #7a1993
-- Accent Hover: #2e79bb
-
-**Dark Mode**:
-- Background: #111111
-- Secondary: #1a1a1a
-- Text Primary: #f0f0f0
-- Text Secondary: #b0b0b0
-- Accent: #9b4dbb
-- Accent Hover: #4a9bd9
-
-### Typography
-- Font Family: Franklin Gothic Medium, system fonts
-- Font Sizes: 12px - 48px (9 levels)
-- Font Weights: 400, 500, 600, 700
-
-### Spacing
-- Base unit: 8px
-- Scale: 8px, 16px, 24px, 40px, 80px
-
-### Border Radius
-- Small: 4px
-- Medium: 6px
-- Large: 8px
-- XL: 12px
-- Full: 9999px
-
-## Performance Features
-
-- **Lazy Image Loading**: Images load on demand with `loading="lazy"`
-- **Code Splitting**: Route-based code splitting with React.lazy and Suspense
-- **CSS Optimization**: CSS Modules prevent style conflicts
-- **Production Build**: Minified assets with optimized bundle size
-
-## Accessibility
-
-- Semantic HTML5 structure
-- ARIA labels on icon buttons
-- Form labels properly associated with inputs
-- Color contrast ratios meet WCAG standards
-- Keyboard navigation support
-- Focus visible styles
-
-## SEO
-
-- Meta descriptions for all pages
-- Open Graph tags for social sharing
-- Twitter card tags
-- Proper heading hierarchy
-- Semantic HTML elements
-- Descriptive link text
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## Deployment
-
-The project is optimized for deployment on any static hosting platform (Vercel, Netlify, GitHub Pages, etc.)
-
-1. Build the project:
-```bash
-npm run build
-```
-
-2. Deploy the `dist/` folder to your hosting service
-
-## License
-
-This portfolio website is the property of Troy Gianopoulos.
-
-## Contact
-
-For inquiries, please visit the contact page or visit the IMDb profile at: https://www.imdb.com/name/nm4104645/
+All while maintaining the immersive, book-themed fantasy aesthetic!

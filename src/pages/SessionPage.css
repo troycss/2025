@@ -1,0 +1,80 @@
+.session-choice {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.session-intro {
+  font-size: 1.2rem;
+  color: var(--ink-light);
+  margin-bottom: 3rem;
+}
+
+.choice-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.large-btn {
+  padding: 1.5rem 2rem;
+  font-size: 1.2rem;
+  width: 100%;
+}
+
+.session-form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.session-code-display {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: var(--parchment-dark);
+  border: 2px solid var(--leather-brown);
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+
+.session-code-display h3 {
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.code-box {
+  font-family: 'Courier New', monospace;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--leather-brown);
+  background: rgba(255, 255, 255, 0.8);
+  padding: 1rem;
+  border: 3px solid var(--gold);
+  border-radius: var(--border-radius);
+  letter-spacing: 0.3em;
+  margin: 1rem 0;
+}
+
+.session-code-display p {
+  color: var(--ink-light);
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .session-intro {
+    font-size: 1rem;
+  }
+
+  .large-btn {
+    padding: 1.25rem 1.5rem;
+    font-size: 1.1rem;
+  }
+
+  .code-box {
+    font-size: 2rem;
+  }
+}

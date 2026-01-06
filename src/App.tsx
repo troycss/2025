@@ -1,37 +1,31 @@
-import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';
-import Home from './pages/Home';
-import About from './pages/About';
-import Projects from './pages/Projects';
-import Contact from './pages/Contact';
+import { useState } from 'react';
+import BookCover from './components/book/BookCover';
+import SessionPage from './pages/SessionPage';
+import CharactersPage from './pages/CharactersPage';
+import DicePage from './pages/DicePage';
+import ReferencePage from './pages/ReferencePage';
+
+type Page = 'cover' | 'session' | 'characters' | 'dice' | 'reference';
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    const saved = localStorage.getItem('darkMode');
-    return saved ? JSON.parse(saved) : false;
-  });
+  const [currentPage, setCurrentPage] = useState<Page>('cover');
 
-  useEffect(() => {
-    localStorage.setItem('darkMode', JSON.stringify(isDarkMode));
-    document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
-  }, [isDarkMode]);
+  const navigateTo = (page: Page) => {
+    setCurrentPage(page);
+  };
 
-  const toggleDarkMode = () => {
-    setIsDarkMode((prev: boolean) => !prev);
+  const goHome = () => {
+    setCurrentPage('cover');
   };
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
-          <Route path="projects" element={<Projects />} />
-          <Route path="contact" element={<Contact />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <div className="app">
+      {currentPage === 'cover' && <BookCover onNavigate={navigateTo} />}
+      {currentPage === 'session' && <SessionPage onBack={goHome} />}
+      {currentPage === 'characters' && <CharactersPage onBack={goHome} />}
+      {currentPage === 'dice' && <DicePage onBack={goHome} />}
+      {currentPage === 'reference' && <ReferencePage onBack={goHome} />}
+    </div>
   );
 }
 
