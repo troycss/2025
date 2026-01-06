@@ -191,3 +191,150 @@ export const SKILLS = [
   'Stealth',
   'Survival'
 ] as const;
+
+export interface DndClass {
+  id: string;
+  name: string;
+  description: string;
+  hit_die: number;
+  primary_ability: string[];
+  saving_throws: string[];
+  armor_proficiencies: string[];
+  weapon_proficiencies: string[];
+  tool_proficiencies: string[];
+  skill_choices: number;
+  skill_options: string[];
+  subclasses: any[];
+  features: Record<string, any>;
+  spell_casting?: any;
+  source_url: string;
+  content: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DndSpell {
+  id: string;
+  name: string;
+  level: number;
+  school: string;
+  casting_time: string;
+  range: string;
+  components: string[];
+  material?: string;
+  duration: string;
+  concentration: boolean;
+  ritual: boolean;
+  description: string;
+  higher_levels?: string;
+  classes: string[];
+  source_url: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DndMonster {
+  id: string;
+  name: string;
+  size: string;
+  type: string;
+  alignment: string;
+  armor_class: number;
+  hit_points: string;
+  speed: Record<string, any>;
+  ability_scores: AbilityScores;
+  saving_throws?: Record<string, number>;
+  skills?: Record<string, number>;
+  damage_resistances?: string[];
+  damage_immunities?: string[];
+  condition_immunities?: string[];
+  senses: Record<string, any>;
+  languages: string[];
+  challenge_rating: string;
+  proficiency_bonus: number;
+  traits: any[];
+  actions: any[];
+  bonus_actions?: any[];
+  reactions?: any[];
+  legendary_actions?: any[];
+  lair_actions?: string;
+  description?: string;
+  source_url: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DndItem {
+  id: string;
+  name: string;
+  type: string;
+  rarity?: string;
+  cost?: string;
+  weight?: string;
+  description: string;
+  properties?: string[];
+  damage?: string;
+  damage_type?: string;
+  armor_class?: string;
+  strength_requirement?: number;
+  stealth_disadvantage: boolean;
+  weapon_mastery?: string;
+  attunement: boolean;
+  attunement_requirements?: string;
+  source_url: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DndSpecies {
+  id: string;
+  name: string;
+  description: string;
+  size: string;
+  speed: number;
+  traits: any[];
+  ability_score_increases?: any;
+  languages: string[];
+  source_url: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DndBackground {
+  id: string;
+  name: string;
+  description: string;
+  skill_proficiencies: string[];
+  tool_proficiencies: string[];
+  languages: number;
+  equipment: string[];
+  feature?: any;
+  source_url: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DndFeat {
+  id: string;
+  name: string;
+  category: string;
+  prerequisites?: string;
+  description: string;
+  benefits: any[];
+  source_url: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DndRule {
+  id: string;
+  title: string;
+  category: string;
+  subcategory?: string;
+  content: string;
+  source_url: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export type DndContentType = 'classes' | 'spells' | 'monsters' | 'items' | 'species' | 'backgrounds' | 'feats' | 'rules';
