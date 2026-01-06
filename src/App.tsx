@@ -4,6 +4,7 @@ import SessionPage from './pages/SessionPage';
 import CharactersPage from './pages/CharactersPage';
 import DicePage from './pages/DicePage';
 import ReferencePage from './pages/ReferencePage';
+import FloatingDiceButton from './components/dice/FloatingDiceButton';
 
 type Page = 'cover' | 'session' | 'characters' | 'dice' | 'reference';
 
@@ -25,6 +26,8 @@ function App() {
       {currentPage === 'characters' && <CharactersPage onBack={goHome} />}
       {currentPage === 'dice' && <DicePage onBack={goHome} />}
       {currentPage === 'reference' && <ReferencePage onBack={goHome} />}
+
+      {currentPage !== 'cover' && currentPage !== 'dice' && <FloatingDiceButton />}
     </div>
   );
 }

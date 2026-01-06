@@ -1,0 +1,340 @@
+.dice-roller {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dice-section {
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid var(--leather-brown);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+}
+
+.dice-section-title {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--leather-brown);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 1rem;
+}
+
+.dice-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.5rem 1rem;
+  background: var(--parchment);
+  border: 3px solid var(--gold);
+  border-radius: var(--border-radius);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--leather-brown);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.dice-button:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  background: var(--parchment-dark);
+}
+
+.dice-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.dice-button.rolling {
+  animation: diceRoll 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes diceRoll {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(90deg) scale(1.1); }
+  50% { transform: rotate(180deg) scale(1.2); }
+  75% { transform: rotate(270deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.dice-label {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.advantage-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.btn-advantage,
+.btn-disadvantage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 1rem;
+  border-radius: var(--border-radius);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all var(--transition);
+  border: 2px solid var(--leather-brown);
+}
+
+.btn-advantage {
+  background: linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%);
+  color: white;
+}
+
+.btn-advantage:hover {
+  background: linear-gradient(135deg, #45a049 0%, #7cb342 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-disadvantage {
+  background: linear-gradient(135deg, #FF5722 0%, #FF9800 100%);
+  color: white;
+}
+
+.btn-disadvantage:hover {
+  background: linear-gradient(135deg, #e64a19 0%, #f57c00 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.dice-detail {
+  font-size: 0.75rem;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.custom-roll-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.custom-roll-input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.custom-roll-input-group .form-input {
+  flex: 1;
+}
+
+.btn-roll {
+  white-space: nowrap;
+  padding: 0.75rem 2rem;
+}
+
+.help-text {
+  font-size: 0.85rem;
+  color: var(--ink-light);
+  font-style: italic;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.btn-clear {
+  background: none;
+  border: none;
+  color: var(--red-seal);
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius);
+  transition: all var(--transition);
+}
+
+.btn-clear:hover {
+  background: rgba(139, 0, 0, 0.1);
+}
+
+.empty-history {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--ink-light);
+}
+
+.empty-icon {
+  opacity: 0.3;
+  margin-bottom: 1rem;
+}
+
+.roll-history {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.roll-item {
+  background: var(--parchment);
+  border: 2px solid var(--leather-brown);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  transition: all var(--transition);
+  animation: slideIn 0.3s ease-out;
+}
+
+.roll-item:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateX(4px);
+}
+
+.roll-item.critical-success {
+  border-color: #4CAF50;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(139, 195, 74, 0.05) 100%);
+}
+
+.roll-item.critical-fail {
+  border-color: var(--red-seal);
+  background: linear-gradient(135deg, rgba(139, 0, 0, 0.1) 0%, rgba(255, 0, 0, 0.05) 100%);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.roll-description {
+  font-size: 0.9rem;
+  color: var(--ink-light);
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+.roll-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.roll-type {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--leather-brown);
+  font-size: 1rem;
+}
+
+.roll-result {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--gold);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.roll-result.result-critical {
+  color: #4CAF50;
+  animation: pulse 0.5s ease-in-out;
+}
+
+.roll-result.result-fail {
+  color: var(--red-seal);
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.roll-breakdown {
+  font-size: 0.9rem;
+  color: var(--ink-light);
+  font-family: 'Courier New', monospace;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.critical-tag,
+.fail-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius);
+  font-family: var(--font-heading);
+}
+
+.critical-tag {
+  background: #4CAF50;
+  color: white;
+}
+
+.fail-tag {
+  background: var(--red-seal);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .dice-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .advantage-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .custom-roll-input-group {
+    flex-direction: column;
+  }
+
+  .btn-roll {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .dice-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dice-button {
+    padding: 1rem 0.5rem;
+  }
+
+  .roll-result {
+    font-size: 1.5rem;
+  }
+}
