@@ -1,25 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:wght@400;500;600&display=swap');
 
 :root {
-  --parchment: #F4E8D0;
-  --parchment-dark: #E8DCC4;
-  --leather-brown: #3E2723;
-  --leather-light: #4E3028;
-  --gold: #D4AF37;
-  --gold-dark: #B8941F;
-  --ink: #2C1810;
-  --ink-light: #5D4037;
-  --red-seal: #8B0000;
+  --parchment: #EDE4D3;
+  --parchment-dark: #DDD4BC;
+  --parchment-darker: #CCC3AB;
+  --leather-brown: #2C1A0F;
+  --leather-mid: #3E2B1F;
+  --leather-light: #53382A;
+  --gold: #C9A961;
+  --gold-dark: #A88B48;
+  --gold-bright: #DDB967;
+  --ink: #1A0F08;
+  --ink-light: #4A3428;
+  --ink-lighter: #6B5345;
+  --red-seal: #8B1A1A;
 
   --font-heading: 'Cinzel', serif;
   --font-body: 'EB Garamond', serif;
 
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
-  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
-  --shadow-book: 4px 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-page:
+    6px 0 12px -4px rgba(0, 0, 0, 0.4),
+    10px 0 20px -8px rgba(0, 0, 0, 0.3);
+  --shadow-book:
+    0 15px 35px rgba(0, 0, 0, 0.5),
+    0 5px 15px rgba(0, 0, 0, 0.3);
+  --shadow-deep:
+    inset 2px 2px 8px rgba(0, 0, 0, 0.3),
+    inset -1px -1px 4px rgba(255, 255, 255, 0.1);
 
-  --border-radius: 4px;
+  --border-radius: 2px;
   --transition: 0.3s ease;
 }
 
@@ -31,11 +40,13 @@
 
 body {
   font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 17px;
+  line-height: 1.7;
   color: var(--ink);
-  background: linear-gradient(135deg, #4E3028 0%, #2C1810 100%);
+  background:
+    radial-gradient(ellipse at top, #3E2B1F 0%, #2C1A0F 50%, #1A0F08 100%);
   min-height: 100vh;
+  background-attachment: fixed;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -67,19 +78,29 @@ input, textarea, select {
 }
 
 .book-page {
-  background: var(--parchment);
+  background:
+    linear-gradient(to bottom right, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, var(--parchment) 0%, var(--parchment-dark) 100%);
   background-image:
+    radial-gradient(ellipse at 10% 10%, rgba(139, 90, 43, 0.03) 0%, transparent 40%),
+    radial-gradient(ellipse at 90% 90%, rgba(139, 90, 43, 0.04) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 248, 230, 0.4) 0%, transparent 70%),
     repeating-linear-gradient(
       0deg,
-      rgba(0, 0, 0, 0.03),
-      rgba(0, 0, 0, 0.03) 1px,
-      transparent 1px,
-      transparent 2px
-    );
-  border: 2px solid var(--leather-brown);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-book);
-  padding: 2rem;
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.01) 2px,
+      rgba(0, 0, 0, 0.01) 3px
+    ),
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.05"/></svg>'),
+    linear-gradient(135deg, #EDE4D3 0%, #E5DCCA 50%, #DDD4BC 100%);
+  border-right: 1px solid rgba(139, 90, 43, 0.3);
+  border-left: 3px solid var(--parchment-darker);
+  box-shadow:
+    var(--shadow-page),
+    inset 0 0 60px rgba(255, 248, 230, 0.3),
+    inset 8px 0 12px -8px rgba(0, 0, 0, 0.2);
+  padding: 3rem 2.5rem;
   position: relative;
 }
 
@@ -88,11 +109,22 @@ input, textarea, select {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(139, 69, 19, 0.05) 100%);
+  width: 8px;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.15), transparent);
   pointer-events: none;
-  border-radius: var(--border-radius);
+}
+
+.book-page::after {
+  content: '';
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  bottom: 1rem;
+  border: 1px solid rgba(139, 90, 43, 0.15);
+  pointer-events: none;
+  box-shadow: inset 0 0 20px rgba(139, 90, 43, 0.05);
 }
 
 .illuminated-header {
@@ -115,84 +147,130 @@ input, textarea, select {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-  color: var(--leather-brown);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%),
+    linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+  color: var(--ink);
   padding: 0.75rem 1.5rem;
   border-radius: var(--border-radius);
   font-weight: 600;
   font-size: 1rem;
-  border: 2px solid var(--leather-brown);
-  box-shadow: var(--shadow-md);
+  border: 2px solid var(--ink);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
   transition: all var(--transition);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-  background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 100%);
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.4),
+    0 0 15px rgba(201, 169, 97, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, transparent 100%),
+    linear-gradient(135deg, var(--gold-bright) 0%, var(--gold-bright) 100%);
 }
 
 .btn-primary:active {
   transform: translateY(0);
-  box-shadow: var(--shadow-sm);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .btn-secondary {
-  background: var(--parchment);
-  color: var(--leather-brown);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%),
+    var(--parchment-dark);
+  color: var(--ink);
   padding: 0.75rem 1.5rem;
   border-radius: var(--border-radius);
   font-weight: 600;
   font-size: 1rem;
-  border: 2px solid var(--leather-brown);
+  border: 2px solid var(--ink-light);
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: all var(--transition);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
 .btn-secondary:hover {
-  background: var(--parchment-dark);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, transparent 100%),
+    var(--parchment-darker);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow:
+    0 5px 10px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .btn-danger {
-  background: var(--red-seal);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, transparent 100%),
+    linear-gradient(135deg, #A82828 0%, var(--red-seal) 100%);
   color: var(--parchment);
   padding: 0.75rem 1.5rem;
   border-radius: var(--border-radius);
   font-weight: 600;
   font-size: 1rem;
-  border: 2px solid var(--leather-brown);
+  border: 2px solid var(--ink);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
   transition: all var(--transition);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .btn-danger:hover {
-  background: #660000;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%),
+    linear-gradient(135deg, #C03030 0%, #A82828 100%);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .form-input {
-  background: rgba(255, 255, 255, 0.9);
-  border: 2px solid var(--leather-brown);
+  background:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 250, 240, 0.8)),
+    var(--parchment);
+  border: 2px solid var(--ink-light);
   border-radius: var(--border-radius);
   padding: 0.75rem;
   width: 100%;
   font-size: 1rem;
   transition: all var(--transition);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.08),
+    0 1px 0 rgba(255, 255, 255, 0.3);
+  color: var(--ink);
 }
 
 .form-input:focus {
   outline: none;
   border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+  box-shadow:
+    0 0 0 3px rgba(201, 169, 97, 0.25),
+    inset 0 2px 4px rgba(0, 0, 0, 0.08),
+    0 0 12px rgba(201, 169, 97, 0.3);
+  background:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 252, 245, 0.9)),
+    var(--parchment);
 }
 
 .form-label {
   font-family: var(--font-heading);
   font-weight: 600;
-  color: var(--leather-brown);
+  color: var(--ink);
   margin-bottom: 0.5rem;
   display: block;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
 .scroll-container {
@@ -202,21 +280,33 @@ input, textarea, select {
 }
 
 .scroll-container::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 .scroll-container::-webkit-scrollbar-track {
-  background: var(--parchment-dark);
-  border-radius: 4px;
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.1), transparent),
+    var(--parchment-dark);
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .scroll-container::-webkit-scrollbar-thumb {
-  background: var(--leather-brown);
-  border-radius: 4px;
+  background:
+    linear-gradient(to right, var(--leather-mid), var(--leather-brown));
+  border-radius: 2px;
+  border: 1px solid var(--ink);
+  box-shadow:
+    inset 0 0 4px rgba(255, 255, 255, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .scroll-container::-webkit-scrollbar-thumb:hover {
-  background: var(--ink);
+  background:
+    linear-gradient(to right, var(--leather-brown), var(--ink));
+  box-shadow:
+    inset 0 0 4px rgba(255, 255, 255, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .dice-icon {
@@ -293,12 +383,46 @@ input, textarea, select {
   }
 }
 
+.ink-stain {
+  position: relative;
+}
+
+.ink-stain::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, rgba(26, 15, 8, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.aged-corner {
+  position: relative;
+}
+
+.aged-corner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  background:
+    radial-gradient(ellipse at top right, transparent 0%, transparent 40%, rgba(139, 90, 43, 0.1) 50%, transparent 100%);
+  pointer-events: none;
+}
+
 @media (max-width: 768px) {
   h1 { font-size: 2rem; }
   h2 { font-size: 1.75rem; }
   h3 { font-size: 1.5rem; }
 
   .book-page {
-    padding: 1rem;
+    padding: 1.5rem;
+  }
+
+  body {
+    font-size: 16px;
   }
 }
