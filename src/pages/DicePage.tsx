@@ -1,4 +1,5 @@
 import PageLayout from '../components/book/PageLayout';
+import DiceRoller from '../components/dice/DiceRoller';
 
 interface DicePageProps {
   onBack: () => void;
@@ -7,13 +8,16 @@ interface DicePageProps {
 export default function DicePage({ onBack }: DicePageProps) {
   return (
     <PageLayout title="Dice Roller" onBack={onBack}>
-      <div style={{ textAlign: 'center', padding: '2rem' }}>
-        <p style={{ fontSize: '1.2rem', color: 'var(--ink-light)' }}>
-          Dice roller coming soon!
+      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        <p style={{
+          textAlign: 'center',
+          marginBottom: '2rem',
+          color: 'var(--ink-light)',
+          fontSize: '1.1rem'
+        }}>
+          Roll all your favorite polyhedral dice with advantage, disadvantage, and custom expressions.
         </p>
-        <p style={{ marginTop: '1rem' }}>
-          Roll all your favorite polyhedral dice here.
-        </p>
+        <DiceRoller showHistory={true} />
       </div>
     </PageLayout>
   );
